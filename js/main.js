@@ -4,7 +4,11 @@ const elList = document.querySelector(".todo-list");
 const elBtnAll = document.querySelector(".text-all");
 const elBtnComp = document.querySelector(".text-comp");
 const elBtnUncomp = document.querySelector(".text-uncomp");
-const todos = [];
+
+const localTodos = JSON.parse(window.localStorage.getItem("list"));
+const todos =localTodos || [] ;
+
+renderTodo(todos , elList);
 
 elList.addEventListener("click" , evt => {
 
@@ -17,6 +21,7 @@ elList.addEventListener("click" , evt => {
     todos.splice(findIndexArr, 1);
 
     renderTodo(todos , elList);
+    window.localStorage.setItem("list", JSON.stringify(todos));
 
   }else if(evt.target.matches(".todo-list__checkbox")){
 
@@ -27,6 +32,7 @@ elList.addEventListener("click" , evt => {
     findElement.isComplated = !findElement.isComplated;
 
     renderTodo(todos , elList);
+    window.localStorage.setItem("list", JSON.stringify(todos));
   }
 })
 
@@ -96,6 +102,7 @@ elForm.addEventListener("submit", evt =>{
   todos.push(todo);
 
   renderTodo(todos , elList);
+  window.localStorage.setItem("list" , JSON.stringify(todos));
 
   elFormInput.value = "";
 
